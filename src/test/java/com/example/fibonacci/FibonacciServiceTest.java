@@ -64,7 +64,6 @@ class FibonacciServiceTest {
         
         final FibonacciNumberDto result = fibonacciService.getFibonacci(input);
         
-        //2???
         verify(fibonacciRepository, times(1)).findByPosition(input.longValue());
         verify(fibonacciRepository, never()).save(any());
 
