@@ -1,5 +1,6 @@
 package com.example.fibonacci;
 
+import com.example.fibonacci.dto.FibonacciNumberDto;
 import com.example.fibonacci.entity.FibonacciNumber;
 import com.example.fibonacci.exception.NumberOutOfRangeException;
 import com.example.fibonacci.repository.FibonacciRepository;
@@ -38,16 +39,17 @@ class FibonacciServiceTest {
 
     static Stream<Object[]> fibonacciLongValues() {
         return Stream.of(
-            new Object[]{"0", BigInteger.ZERO},
-            new Object[]{"1", BigInteger.ONE},
-            new Object[]{"55", new BigInteger("10")}
+            new Object[]{new FibonacciNumberDto("0", "0"), BigInteger.ZERO},
+            new Object[]{new FibonacciNumberDto("1", "1"), BigInteger.ONE},
+            new Object[]{new FibonacciNumberDto("10", "55"), new BigInteger("10")}
         );
     }
 
     @ParameterizedTest
     @MethodSource("fibonacciLongValues")
-    void testFibonacciCalculationLongValues(String expected, BigInteger input) {
-        assertEquals(expected, fibonacciService.getFibonacci(input));
+    void testFibonacciCalculationLongValues(FibonacciNumberDto expected, BigInteger input) {
+        assertEquals(expected.getN(), fibonacciService.getFibonacci(input).getN());
+        assertEquals(expected.getValue(), fibonacciService.getFibonacci(input).getValue());
     }
 
     @Test
@@ -59,14 +61,16 @@ class FibonacciServiceTest {
         mockedFibonacciNumber.setPosition(input.longValue());
         mockedFibonacciNumber.setFibValue(output);
         when(fibonacciRepository.findByPosition(input.longValue())).thenReturn(Optional.of(mockedFibonacciNumber));
-
-        final String result = fibonacciService.getFibonacci(input);
         
+        final FibonacciNumberDto result = fibonacciService.getFibonacci(input);
+        
+        //2???
         verify(fibonacciRepository, times(1)).findByPosition(input.longValue());
         verify(fibonacciRepository, never()).save(any());
 
         assertNotNull(result);
-        assertEquals("55", result);
+        assertEquals(mockedFibonacciNumber.getPosition().toString(), result.getN());
+        assertEquals(mockedFibonacciNumber.getFibValue(), result.getValue());
     }
 
     @Test

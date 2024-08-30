@@ -16,9 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.example.fibonacci.controller.FibonacciController;
-import com.example.fibonacci.exception.CustomExceptionHandler;
+import com.example.fibonacci.dto.FibonacciNumberDto;
 import com.example.fibonacci.exception.InvalidNumberException;
 import com.example.fibonacci.exception.NumberOutOfRangeException;
 import com.example.fibonacci.service.FibonacciService;
@@ -43,14 +45,15 @@ class FibbonacciControllerTest {
     @Test
     void testGetFibonacciWithValidNumber() throws Exception {
         String validNumber = "10";
-        String expectedFibonacciResult = "55";
+        String validResponse = "55";
+        FibonacciNumberDto expectedFibonacciResult = new FibonacciNumberDto(validNumber,validResponse);
 
         when(fibonacciService.getFibonacci(new BigInteger(validNumber))).thenReturn(expectedFibonacciResult);
-
-        mockMvc.perform(get("/fibonacci/" + validNumber))
+        mockMvc.perform(get("/fibonacci/" + validNumber)
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string(expectedFibonacciResult));
-
+                .andExpect(MockMvcResultMatchers.jsonPath("$.n").value("10"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.value").value("55"));
         verify(statisticsService, times(1)).updateStatistics(new BigInteger(validNumber));
         verify(fibonacciService, times(1)).getFibonacci(new BigInteger(validNumber));
     }
