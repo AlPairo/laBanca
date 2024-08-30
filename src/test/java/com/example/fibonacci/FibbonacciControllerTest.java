@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import java.lang.reflect.Executable;
 import java.math.BigInteger;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -17,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import com.example.fibonacci.controller.FibonacciController;
+import com.example.fibonacci.exception.CustomExceptionHandler;
 import com.example.fibonacci.exception.InvalidNumberException;
 import com.example.fibonacci.exception.NumberOutOfRangeException;
 import com.example.fibonacci.service.FibonacciService;
