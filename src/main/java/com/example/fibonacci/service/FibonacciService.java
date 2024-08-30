@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.ArrayList;
 import com.example.fibonacci.dto.FibonacciNumberDto;
-import com.example.fibonacci.dto.FibonacciStatisticsDto;
 import com.example.fibonacci.entity.FibonacciNumber;
 import com.example.fibonacci.exception.NumberOutOfRangeException;
 import com.example.fibonacci.repository.FibonacciRepository;

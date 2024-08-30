@@ -7,7 +7,6 @@ import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import java.util.ArrayList;
@@ -62,7 +61,7 @@ class StatisticsServiceTest {
     }
 
     @Test
-    public void testGetByPositionNotFound() {
+    void testGetByPositionNotFound() {
         when(statisticsRepository.findByPosition(1L)).thenReturn(Optional.empty());
 
         FibonacciStatisticsDto result = statisticsService.getByPosition("1");
@@ -71,7 +70,7 @@ class StatisticsServiceTest {
     }
 
     @Test
-    public void testUpdateStatisticsExisting() {
+    void testUpdateStatisticsExisting() {
         FibonacciStatistics existingStat = new FibonacciStatistics();
         existingStat.setPosition(1L);
         existingStat.setRequestCount(5L);

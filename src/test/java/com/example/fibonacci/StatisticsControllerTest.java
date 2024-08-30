@@ -17,12 +17,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import com.example.fibonacci.controller.FibonacciController;
 import com.example.fibonacci.controller.StatisticsController;
 import com.example.fibonacci.dto.FibonacciStatisticsDto;
 import com.example.fibonacci.exception.InvalidNumberException;
 import com.example.fibonacci.exception.NumberOutOfRangeException;
-import com.example.fibonacci.service.FibonacciService;
 import com.example.fibonacci.service.StatisticsService;
 
 @SpringBootTest
