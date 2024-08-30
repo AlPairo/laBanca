@@ -55,6 +55,10 @@ public class StatisticsService {
         return ret;
     }
 
+    /**
+     * Actualiza las estadisticas de uso para el valor dado
+     * @param n valor
+     */
     public void updateStatistics(BigInteger n) {
         FibonacciStatistics statistics = statisticsRepository.findByPosition(n.longValue())
                 .orElse(new FibonacciStatistics());
