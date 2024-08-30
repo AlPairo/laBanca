@@ -1,5 +1,6 @@
 package com.example.fibonacci.controller;
 
+import com.example.fibonacci.dto.FibonacciNumberDto;
 import com.example.fibonacci.exception.InvalidNumberException;
 import com.example.fibonacci.exception.NumberOutOfRangeException;
 import com.example.fibonacci.service.FibonacciService;
@@ -24,7 +25,7 @@ public class FibonacciController {
     }
 
     @GetMapping("/fibonacci/{n}")
-    public String getFibonacci(@PathVariable String n) {
+    public FibonacciNumberDto getFibonacci(@PathVariable String n) {
         try {
             BigInteger number = new BigInteger(n);
             if (number.compareTo(BigInteger.ZERO) < 0) {

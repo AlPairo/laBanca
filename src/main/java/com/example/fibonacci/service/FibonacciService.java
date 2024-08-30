@@ -5,7 +5,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.ArrayList;
-
+import com.example.fibonacci.dto.FibonacciNumberDto;
+import com.example.fibonacci.dto.FibonacciStatisticsDto;
 import com.example.fibonacci.entity.FibonacciNumber;
 import com.example.fibonacci.exception.NumberOutOfRangeException;
 import com.example.fibonacci.repository.FibonacciRepository;
@@ -20,15 +21,30 @@ public class FibonacciService {
         this.fibonacciRepository = fibonacciRepository;
     }
 
-    public String getFibonacci(BigInteger n) {
+    /**
+     * Devuelve el valor de la serie fibonacci para la posición dada
+     * @param n posición
+     * @return valor de la serie fibonacci para la n-esima posición
+     */
+    public FibonacciNumberDto getFibonacci(BigInteger n) {
+        FibonacciNumberDto ret = new FibonacciNumberDto();
         Optional<FibonacciNumber> cachedResult = fibonacciRepository.findByPosition(n.longValue());
         if (cachedResult.isPresent()) {
-            return cachedResult.get().getFibValue();
+            ret.setN(cachedResult.get().getPosition().toString());
+            ret.setValue(cachedResult.get().getFibValue());
+        }else{
+            BigInteger result = calculateFibonacci(n);
+            ret.setN(n.toString());
+            ret.setValue(result.toString());
         }
-        BigInteger result = calculateFibonacci(n);
-        return result.toString();
+        return ret;
     }
 
+    /**
+     * Calcula el valor de la serie fibonacci para la posición dada
+     * @param n posición
+     * @return valor de la serie fibonacci para la n-esima posición
+     */
     private BigInteger calculateFibonacci(BigInteger n) {
         List<FibonacciNumber> fibonacciNumbers = new ArrayList<>();
         if (n.compareTo(BigInteger.ZERO) < 0){
