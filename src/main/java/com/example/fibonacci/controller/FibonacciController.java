@@ -30,9 +30,7 @@ public class FibonacciController {
             if (number.compareTo(BigInteger.ZERO) < 0) {
                 throw new NumberOutOfRangeException("El número no puede ser menor a 0");
             }
-            System.out.println("updateStatistics "+number);
             statisticsService.updateStatistics(number);
-            System.out.println("getFibonacci "+number);
             return fibonacciService.getFibonacci(number);
         } catch (NumberFormatException e) {
             throw new InvalidNumberException("El valor proporcionado no es un número válido");
